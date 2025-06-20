@@ -176,7 +176,8 @@ def get_sales_transactions():
             "error": f"Failed to fetch sales transactions: {str(e)}"
         }
 
-def get_stock_adjustment(branch_id: str, from_date: str, to_date: str, access_token: str = None) -> Dict[str, Any]:
+@frappe.whitelist(allow_guest=True)
+def get_stock_adjustment():
     """
     Get stock adjustment data for a specific branch and date range
     
@@ -189,17 +190,16 @@ def get_stock_adjustment(branch_id: str, from_date: str, to_date: str, access_to
     Returns:
         Dict containing stock adjustment data
     """
-    if not access_token:
-        auth_result = authenticate()
-        if "error" in auth_result:
-            return auth_result
-        access_token = auth_result.get('token')
+    auth_result = authenticate()
+    if "error" in auth_result:
+        return auth_result
+    access_token = auth_result.get('token')
     
     url = "https://andaserp.com/api/v1/stock-adjustment"
     params = {
-        "branchId": branch_id,
-        "from": from_date,
-        "to": to_date
+        "branchId": "10002",
+        "from": "2025-05-04",
+        "to": "2025-05-10"
     }
     
     headers = {
@@ -226,7 +226,8 @@ def get_stock_adjustment(branch_id: str, from_date: str, to_date: str, access_to
             "error": f"Failed to fetch stock adjustment: {str(e)}"
         }
 
-def get_wastages(branch_id: str, from_date: str, to_date: str, access_token: str = None) -> Dict[str, Any]:
+@frappe.whitelist(allow_guest=True)
+def get_wastages():
     """
     Get wastage data for a specific branch and date range
     
@@ -239,17 +240,16 @@ def get_wastages(branch_id: str, from_date: str, to_date: str, access_token: str
     Returns:
         Dict containing wastage data
     """
-    if not access_token:
-        auth_result = authenticate()
-        if "error" in auth_result:
-            return auth_result
-        access_token = auth_result.get('token')
+    auth_result = authenticate()
+    if "error" in auth_result:
+        return auth_result
+    access_token = auth_result.get('token')
     
     url = "https://andaserp.com/api/v1/wastages"
     params = {
-        "branchId": branch_id,
-        "from": from_date,
-        "to": to_date
+        "branchId": "10002",
+        "from": "2025-05-04",
+        "to": "2025-05-10"
     }
     
     headers = {
@@ -276,7 +276,8 @@ def get_wastages(branch_id: str, from_date: str, to_date: str, access_token: str
             "error": f"Failed to fetch wastages: {str(e)}"
         }
 
-def get_consumption(branch_id: str, from_date: str, to_date: str, access_token: str = None) -> Dict[str, Any]:
+@frappe.whitelist(allow_guest=True)
+def get_consumption():
     """
     Get consumption data for a specific branch and date range
     
@@ -289,17 +290,16 @@ def get_consumption(branch_id: str, from_date: str, to_date: str, access_token: 
     Returns:
         Dict containing consumption data
     """
-    if not access_token:
-        auth_result = authenticate()
-        if "error" in auth_result:
-            return auth_result
-        access_token = auth_result.get('token')
+    auth_result = authenticate()
+    if "error" in auth_result:
+        return auth_result
+    access_token = auth_result.get('token')
     
     url = "https://andaserp.com/api/v1/consumption"
     params = {
-        "branchId": branch_id,
-        "from": from_date,
-        "to": to_date
+        "branchId": "10002",
+        "from": "2025-05-04",
+        "to": "2025-05-10"
     }
     
     headers = {
@@ -326,7 +326,8 @@ def get_consumption(branch_id: str, from_date: str, to_date: str, access_token: 
             "error": f"Failed to fetch consumption: {str(e)}"
         }
 
-def get_purchases(from_date: str, to_date: str, access_token: str = None) -> Dict[str, Any]:
+@frappe.whitelist(allow_guest=True)
+def get_purchases():
     """
     Get purchase data for a specific date range (no branch filter)
     
@@ -338,16 +339,15 @@ def get_purchases(from_date: str, to_date: str, access_token: str = None) -> Dic
     Returns:
         Dict containing purchase data
     """
-    if not access_token:
-        auth_result = authenticate()
-        if "error" in auth_result:
-            return auth_result
-        access_token = auth_result.get('token')
+    auth_result = authenticate()
+    if "error" in auth_result:
+        return auth_result
+    access_token = auth_result.get('token')
     
     url = "https://andaserp.com/api/v1/purchases"
     params = {
-        "from": from_date,
-        "to": to_date
+        "from": "2025-05-04",
+        "to": "2025-05-10"
     }
     
     headers = {
@@ -374,7 +374,8 @@ def get_purchases(from_date: str, to_date: str, access_token: str = None) -> Dic
             "error": f"Failed to fetch purchases: {str(e)}"
         }
 
-def get_user_info(access_token: str = None) -> Dict[str, Any]:
+@frappe.whitelist(allow_guest=True)
+def get_user_info():
     """
     Get authenticated user information
     
@@ -384,11 +385,10 @@ def get_user_info(access_token: str = None) -> Dict[str, Any]:
     Returns:
         Dict containing user information
     """
-    if not access_token:
-        auth_result = authenticate()
-        if "error" in auth_result:
-            return auth_result
-        access_token = auth_result.get('token')
+    auth_result = authenticate()
+    if "error" in auth_result:
+        return auth_result
+    access_token = auth_result.get('token')
     
     url = "https://andaserp.com/api/v1/user"
     
@@ -416,7 +416,8 @@ def get_user_info(access_token: str = None) -> Dict[str, Any]:
             "error": f"Failed to fetch user info: {str(e)}"
         }
 
-def get_final_production(access_token: str = None) -> Dict[str, Any]:
+@frappe.whitelist(allow_guest=True)
+def get_final_production():
     """
     Get final production items data
     
@@ -426,11 +427,10 @@ def get_final_production(access_token: str = None) -> Dict[str, Any]:
     Returns:
         Dict containing final production items data
     """
-    if not access_token:
-        auth_result = authenticate()
-        if "error" in auth_result:
-            return auth_result
-        access_token = auth_result.get('token')
+    auth_result = authenticate()
+    if "error" in auth_result:
+        return auth_result
+    access_token = auth_result.get('token')
     
     url = "https://andaserp.com/api/v1/final-production"
     
@@ -458,7 +458,8 @@ def get_final_production(access_token: str = None) -> Dict[str, Any]:
             "error": f"Failed to fetch final production: {str(e)}"
         }
 
-def get_outlets(access_token: str = None) -> Dict[str, Any]:
+@frappe.whitelist(allow_guest=True)
+def get_outlets():
     """
     Get outlets/branches information
     
@@ -468,11 +469,10 @@ def get_outlets(access_token: str = None) -> Dict[str, Any]:
     Returns:
         Dict containing outlets/branches data
     """
-    if not access_token:
-        auth_result = authenticate()
-        if "error" in auth_result:
-            return auth_result
-        access_token = auth_result.get('token')
+    auth_result = authenticate()
+    if "error" in auth_result:
+        return auth_result
+    access_token = auth_result.get('token')
     
     url = "https://andaserp.com/api/v1/get-outlets"
     
@@ -500,7 +500,8 @@ def get_outlets(access_token: str = None) -> Dict[str, Any]:
             "error": f"Failed to fetch outlets: {str(e)}"
         }
 
-def get_all_branch_data(branch_id: str, from_date: str, to_date: str, access_token: str = None) -> Dict[str, Any]:
+@frappe.whitelist(allow_guest=True)
+def get_all_branch_data():
     """
     Get comprehensive data for a specific branch including sales, stock, and consumption
     
@@ -515,11 +516,11 @@ def get_all_branch_data(branch_id: str, from_date: str, to_date: str, access_tok
     """
     try:
         return {
-            "sales_summary": get_sales_summary(branch_id, from_date, to_date, access_token),
-            "sales_transactions": get_sales_transactions(branch_id, from_date, to_date, access_token),
-            "stock_adjustment": get_stock_adjustment(branch_id, from_date, to_date, access_token),
-            "wastages": get_wastages(branch_id, from_date, to_date, access_token),
-            "consumption": get_consumption(branch_id, from_date, to_date, access_token)
+            "sales_summary": get_sales_summary(),
+            "sales_transactions": get_sales_transactions(),
+            "stock_adjustment": get_stock_adjustment(),
+            "wastages": get_wastages(),
+            "consumption": get_consumption()
         }
     except Exception as e:
         frappe.log_error(frappe.get_traceback(), "Andas API All Branch Data Error")
@@ -527,7 +528,8 @@ def get_all_branch_data(branch_id: str, from_date: str, to_date: str, access_tok
             "error": f"Failed to fetch all branch data: {str(e)}"
         }
 
-def get_comprehensive_report(from_date: str, to_date: str, branch_ids: Optional[List[str]] = None, access_token: str = None) -> Dict[str, Any]:
+@frappe.whitelist(allow_guest=True)
+def get_comprehensive_report():
     """
     Get comprehensive business report including all data types
     
@@ -542,17 +544,13 @@ def get_comprehensive_report(from_date: str, to_date: str, branch_ids: Optional[
     """
     try:
         report = {
-            "purchases": get_purchases(from_date, to_date, access_token),
-            "final_production": get_final_production(access_token),
-            "outlets": get_outlets(access_token),
-            "user_info": get_user_info(access_token)
+            "purchases": get_purchases(),
+            "final_production": get_final_production(),
+            "outlets": get_outlets(),
+            "user_info": get_user_info()
         }
         
         # If branch IDs provided, get branch-specific data
-        if branch_ids:
-            report["branch_data"] = {}
-            for branch_id in branch_ids:
-                report["branch_data"][branch_id] = get_all_branch_data(branch_id, from_date, to_date, access_token)
         
         return report
     except Exception as e:
