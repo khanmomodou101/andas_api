@@ -132,6 +132,7 @@ def get_sales_summary(branch_id: str = None, from_date: str = None, to_date: str
         frappe.log_error(frappe.get_traceback(), "Andas API Sales Summary Error")
         return str(e)
 
+@frappe.whitelist(allow_guest=True)
 def get_sales_transactions(branch_id: str = None, from_date: str = None, to_date: str = None, access_token: str = None) -> Dict[str, Any]:
     """
     Get detailed sales transactions for a specific branch and date range
@@ -185,7 +186,7 @@ def get_sales_transactions(branch_id: str = None, from_date: str = None, to_date
         return {
             "error": f"Failed to fetch sales transactions: {str(e)}"
         }
-
+@frappe.whitelist(allow_guest=True)
 def get_stock_adjustment(branch_id: str = None, from_date: str = None, to_date: str = None, access_token: str = None) -> Dict[str, Any]:
     """
     Get stock adjustment data for a specific branch and date range
@@ -239,7 +240,7 @@ def get_stock_adjustment(branch_id: str = None, from_date: str = None, to_date: 
         return {
             "error": f"Failed to fetch stock adjustment: {str(e)}"
         }
-
+@frappe.whitelist(allow_guest=True)
 def get_wastages(branch_id: str = None, from_date: str = None, to_date: str = None, access_token: str = None) -> Dict[str, Any]:
     """
     Get wastage data for a specific branch and date range
@@ -293,7 +294,7 @@ def get_wastages(branch_id: str = None, from_date: str = None, to_date: str = No
         return {
             "error": f"Failed to fetch wastages: {str(e)}"
         }
-
+@frappe.whitelist(allow_guest=True)
 def get_consumption(branch_id: str = None, from_date: str = None, to_date: str = None, access_token: str = None) -> Dict[str, Any]:
     """
     Get consumption data for a specific branch and date range
@@ -348,6 +349,7 @@ def get_consumption(branch_id: str = None, from_date: str = None, to_date: str =
             "error": f"Failed to fetch consumption: {str(e)}"
         }
 
+@frappe.whitelist(allow_guest=True)
 def get_purchases(from_date: str = None, to_date: str = None, access_token: str = None) -> Dict[str, Any]:
     """
     Get purchase data for a specific date range (no branch filter)
@@ -398,7 +400,7 @@ def get_purchases(from_date: str = None, to_date: str = None, access_token: str 
         return {
             "error": f"Failed to fetch purchases: {str(e)}"
         }
-
+@frappe.whitelist(allow_guest=True)
 def get_user_info(access_token: str = None) -> Dict[str, Any]:
     """
     Get authenticated user information
@@ -441,6 +443,7 @@ def get_user_info(access_token: str = None) -> Dict[str, Any]:
             "error": f"Failed to fetch user info: {str(e)}"
         }
 
+@frappe.whitelist(allow_guest=True)
 def get_final_production(access_token: str = None) -> Dict[str, Any]:
     """
     Get final production items data
@@ -483,6 +486,8 @@ def get_final_production(access_token: str = None) -> Dict[str, Any]:
             "error": f"Failed to fetch final production: {str(e)}"
         }
 
+
+@frappe.whitelist(allow_guest=True)
 def get_outlets(access_token: str = None) -> Dict[str, Any]:
     """
     Get outlets/branches information
@@ -524,7 +529,7 @@ def get_outlets(access_token: str = None) -> Dict[str, Any]:
         return {
             "error": f"Failed to fetch outlets: {str(e)}"
         }
-
+@frappe.whitelist(allow_guest=True)
 def get_all_branch_data(branch_id: str = None, from_date: str = None, to_date: str = None, access_token: str = None) -> Dict[str, Any]:
     """
     Get comprehensive data for a specific branch including sales, stock, and consumption
@@ -551,7 +556,7 @@ def get_all_branch_data(branch_id: str = None, from_date: str = None, to_date: s
         return {
             "error": f"Failed to fetch all branch data: {str(e)}"
         }
-
+@frappe.whitelist(allow_guest=True)
 def get_comprehensive_report(from_date: str = None, to_date: str = None, branch_ids: Optional[List[str]] = None, access_token: str = None) -> Dict[str, Any]:
     """
     Get comprehensive business report including all data types
