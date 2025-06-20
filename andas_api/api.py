@@ -77,31 +77,36 @@ def authenticate() -> Dict[str, Any]:
 
 
 @frappe.whitelist(allow_guest=True)
-def get_sales_summary() -> Dict[str, Any]:
+def get_sales_summary(branch_id: str = None, from_date: str = None, to_date: str = None, access_token: str = None) -> Dict[str, Any]:
     """
     Get sales summary for a specific branch and date range
     
     Args:
-        branch_id: Branch identifier
-        from_date: Start date in YYYY-MM-DD format
-        to_date: End date in YYYY-MM-DD format
-        access_token: Authentication token
+        branch_id: Optional branch identifier
+        from_date: Optional start date in YYYY-MM-DD format
+        to_date: Optional end date in YYYY-MM-DD format
+        access_token: Optional authentication token
         
     Returns:
         Dict containing sales summary data
     """
 
-    auth_result = authenticate()
-    if "error" in auth_result:
-        return auth_result
-    access_token = auth_result.get('token')
+    if not access_token:
+        auth_result = authenticate()
+        if "error" in auth_result:
+            return auth_result
+        access_token = auth_result.get('token')
     
     url = "https://andaserp.com/api/v1/sales-summary"
-    params = {
-        "branchId": "10002",
-        "from": "2025-05-04",
-        "to": "2025-05-10"
-    }
+    params = {}
+    
+    # Only add parameters to filter if they are provided
+    if branch_id:
+        params["branchId"] = branch_id
+    if from_date:
+        params["from"] = from_date
+    if to_date:
+        params["to"] = to_date
     
     headers = {
         "Authorization": f"Bearer {access_token}",
@@ -127,15 +132,15 @@ def get_sales_summary() -> Dict[str, Any]:
         frappe.log_error(frappe.get_traceback(), "Andas API Sales Summary Error")
         return str(e)
 
-def get_sales_transactions(branch_id: str, from_date: str, to_date: str, access_token: str = None) -> Dict[str, Any]:
+def get_sales_transactions(branch_id: str = None, from_date: str = None, to_date: str = None, access_token: str = None) -> Dict[str, Any]:
     """
     Get detailed sales transactions for a specific branch and date range
     
     Args:
-        branch_id: Branch identifier
-        from_date: Start date in YYYY-MM-DD format
-        to_date: End date in YYYY-MM-DD format
-        access_token: Authentication token
+        branch_id: Optional branch identifier
+        from_date: Optional start date in YYYY-MM-DD format
+        to_date: Optional end date in YYYY-MM-DD format
+        access_token: Optional authentication token
         
     Returns:
         Dict containing sales transactions data
@@ -147,11 +152,15 @@ def get_sales_transactions(branch_id: str, from_date: str, to_date: str, access_
         access_token = auth_result.get('token')
     
     url = "https://andaserp.com/api/v1/sales-transaction"
-    params = {
-        "branchId": branch_id,
-        "from": from_date,
-        "to": to_date
-    }
+    params = {}
+    
+    # Only add parameters to filter if they are provided
+    if branch_id:
+        params["branchId"] = branch_id
+    if from_date:
+        params["from"] = from_date
+    if to_date:
+        params["to"] = to_date
     
     headers = {
         "Authorization": f"Bearer {access_token}",
@@ -177,15 +186,15 @@ def get_sales_transactions(branch_id: str, from_date: str, to_date: str, access_
             "error": f"Failed to fetch sales transactions: {str(e)}"
         }
 
-def get_stock_adjustment(branch_id: str, from_date: str, to_date: str, access_token: str = None) -> Dict[str, Any]:
+def get_stock_adjustment(branch_id: str = None, from_date: str = None, to_date: str = None, access_token: str = None) -> Dict[str, Any]:
     """
     Get stock adjustment data for a specific branch and date range
     
     Args:
-        branch_id: Branch identifier
-        from_date: Start date in YYYY-MM-DD format
-        to_date: End date in YYYY-MM-DD format
-        access_token: Authentication token
+        branch_id: Optional branch identifier
+        from_date: Optional start date in YYYY-MM-DD format
+        to_date: Optional end date in YYYY-MM-DD format
+        access_token: Optional authentication token
         
     Returns:
         Dict containing stock adjustment data
@@ -197,11 +206,15 @@ def get_stock_adjustment(branch_id: str, from_date: str, to_date: str, access_to
         access_token = auth_result.get('token')
     
     url = "https://andaserp.com/api/v1/stock-adjustment"
-    params = {
-        "branchId": branch_id,
-        "from": from_date,
-        "to": to_date
-    }
+    params = {}
+    
+    # Only add parameters to filter if they are provided
+    if branch_id:
+        params["branchId"] = branch_id
+    if from_date:
+        params["from"] = from_date
+    if to_date:
+        params["to"] = to_date
     
     headers = {
         "Authorization": f"Bearer {access_token}",
@@ -227,15 +240,15 @@ def get_stock_adjustment(branch_id: str, from_date: str, to_date: str, access_to
             "error": f"Failed to fetch stock adjustment: {str(e)}"
         }
 
-def get_wastages(branch_id: str, from_date: str, to_date: str, access_token: str = None) -> Dict[str, Any]:
+def get_wastages(branch_id: str = None, from_date: str = None, to_date: str = None, access_token: str = None) -> Dict[str, Any]:
     """
     Get wastage data for a specific branch and date range
     
     Args:
-        branch_id: Branch identifier
-        from_date: Start date in YYYY-MM-DD format
-        to_date: End date in YYYY-MM-DD format
-        access_token: Authentication token
+        branch_id: Optional branch identifier
+        from_date: Optional start date in YYYY-MM-DD format
+        to_date: Optional end date in YYYY-MM-DD format
+        access_token: Optional authentication token
         
     Returns:
         Dict containing wastage data
@@ -247,11 +260,15 @@ def get_wastages(branch_id: str, from_date: str, to_date: str, access_token: str
         access_token = auth_result.get('token')
     
     url = "https://andaserp.com/api/v1/wastages"
-    params = {
-        "branchId": branch_id,
-        "from": from_date,
-        "to": to_date
-    }
+    params = {}
+    
+    # Only add parameters to filter if they are provided
+    if branch_id:
+        params["branchId"] = branch_id
+    if from_date:
+        params["from"] = from_date
+    if to_date:
+        params["to"] = to_date
     
     headers = {
         "Authorization": f"Bearer {access_token}",
@@ -277,15 +294,15 @@ def get_wastages(branch_id: str, from_date: str, to_date: str, access_token: str
             "error": f"Failed to fetch wastages: {str(e)}"
         }
 
-def get_consumption(branch_id: str, from_date: str, to_date: str, access_token: str = None) -> Dict[str, Any]:
+def get_consumption(branch_id: str = None, from_date: str = None, to_date: str = None, access_token: str = None) -> Dict[str, Any]:
     """
     Get consumption data for a specific branch and date range
     
     Args:
-        branch_id: Branch identifier
-        from_date: Start date in YYYY-MM-DD format
-        to_date: End date in YYYY-MM-DD format
-        access_token: Authentication token
+        branch_id: Optional branch identifier
+        from_date: Optional start date in YYYY-MM-DD format
+        to_date: Optional end date in YYYY-MM-DD format
+        access_token: Optional authentication token
         
     Returns:
         Dict containing consumption data
@@ -297,11 +314,15 @@ def get_consumption(branch_id: str, from_date: str, to_date: str, access_token: 
         access_token = auth_result.get('token')
     
     url = "https://andaserp.com/api/v1/consumption"
-    params = {
-        "branchId": branch_id,
-        "from": from_date,
-        "to": to_date
-    }
+    params = {}
+    
+    # Only add parameters to filter if they are provided
+    if branch_id:
+        params["branchId"] = branch_id
+    if from_date:
+        params["from"] = from_date
+    if to_date:
+        params["to"] = to_date
     
     headers = {
         "Authorization": f"Bearer {access_token}",
@@ -327,14 +348,14 @@ def get_consumption(branch_id: str, from_date: str, to_date: str, access_token: 
             "error": f"Failed to fetch consumption: {str(e)}"
         }
 
-def get_purchases(from_date: str, to_date: str, access_token: str = None) -> Dict[str, Any]:
+def get_purchases(from_date: str = None, to_date: str = None, access_token: str = None) -> Dict[str, Any]:
     """
     Get purchase data for a specific date range (no branch filter)
     
     Args:
-        from_date: Start date in YYYY-MM-DD format
-        to_date: End date in YYYY-MM-DD format
-        access_token: Authentication token
+        from_date: Optional start date in YYYY-MM-DD format
+        to_date: Optional end date in YYYY-MM-DD format
+        access_token: Optional authentication token
         
     Returns:
         Dict containing purchase data
@@ -346,10 +367,13 @@ def get_purchases(from_date: str, to_date: str, access_token: str = None) -> Dic
         access_token = auth_result.get('token')
     
     url = "https://andaserp.com/api/v1/purchases"
-    params = {
-        "from": from_date,
-        "to": to_date
-    }
+    params = {}
+    
+    # Only add parameters to filter if they are provided
+    if from_date:
+        params["from"] = from_date
+    if to_date:
+        params["to"] = to_date
     
     headers = {
         "Authorization": f"Bearer {access_token}",
@@ -501,15 +525,15 @@ def get_outlets(access_token: str = None) -> Dict[str, Any]:
             "error": f"Failed to fetch outlets: {str(e)}"
         }
 
-def get_all_branch_data(branch_id: str, from_date: str, to_date: str, access_token: str = None) -> Dict[str, Any]:
+def get_all_branch_data(branch_id: str = None, from_date: str = None, to_date: str = None, access_token: str = None) -> Dict[str, Any]:
     """
     Get comprehensive data for a specific branch including sales, stock, and consumption
     
     Args:
-        branch_id: Branch identifier
-        from_date: Start date in YYYY-MM-DD format
-        to_date: End date in YYYY-MM-DD format
-        access_token: Authentication token
+        branch_id: Optional branch identifier
+        from_date: Optional start date in YYYY-MM-DD format
+        to_date: Optional end date in YYYY-MM-DD format
+        access_token: Optional authentication token
         
     Returns:
         Dict containing all branch-related data
@@ -528,15 +552,15 @@ def get_all_branch_data(branch_id: str, from_date: str, to_date: str, access_tok
             "error": f"Failed to fetch all branch data: {str(e)}"
         }
 
-def get_comprehensive_report(from_date: str, to_date: str, branch_ids: Optional[List[str]] = None, access_token: str = None) -> Dict[str, Any]:
+def get_comprehensive_report(from_date: str = None, to_date: str = None, branch_ids: Optional[List[str]] = None, access_token: str = None) -> Dict[str, Any]:
     """
     Get comprehensive business report including all data types
     
     Args:
-        from_date: Start date in YYYY-MM-DD format
-        to_date: End date in YYYY-MM-DD format
+        from_date: Optional start date in YYYY-MM-DD format
+        to_date: Optional end date in YYYY-MM-DD format
         branch_ids: Optional list of branch IDs to filter by
-        access_token: Authentication token
+        access_token: Optional authentication token
         
     Returns:
         Dict containing comprehensive business report
@@ -583,27 +607,42 @@ def test_authentication_and_sales():
         print(f"   User ID: {auth_result.get('user_id')}")
         print(f"   Token: {auth_result.get('token')[:20]}...")
         
-        # Step 2: Test sales summary with the token
-        print("📊 Testing sales summary...")
-        sales_result = get_sales_summary(
+        # Step 2: Test sales summary with specific parameters
+        print("📊 Testing sales summary with specific parameters...")
+        sales_result_filtered = get_sales_summary(
             branch_id="10002",
             from_date="2025-05-04",
             to_date="2025-05-10",
             access_token=auth_result.get('token')
         )
         
-        if "error" in sales_result:
+        # Step 3: Test sales summary without parameters (get all data)
+        print("📊 Testing sales summary without parameters (all data)...")
+        sales_result_all = get_sales_summary(
+            access_token=auth_result.get('token')
+        )
+        
+        if "error" in sales_result_filtered:
             return {
                 "success": False,
-                "step": "sales_summary",
+                "step": "sales_summary_filtered",
                 "auth_result": auth_result,
-                "error": sales_result
+                "error": sales_result_filtered
+            }
+        
+        if "error" in sales_result_all:
+            return {
+                "success": False,
+                "step": "sales_summary_all",
+                "auth_result": auth_result,
+                "error": sales_result_all
             }
         
         return {
             "success": True,
             "auth_result": auth_result,
-            "sales_result": sales_result
+            "sales_result_filtered": sales_result_filtered,
+            "sales_result_all": sales_result_all
         }
         
     except Exception as e:
