@@ -126,7 +126,7 @@ def get_sales_summary() -> Dict[str, Any]:
     except Exception as e:
         frappe.log_error(frappe.get_traceback(), "Andas API Sales Summary Error")
         return str(e)
-
+@frappe.whitelist(allow_guest=True)
 def get_sales_transactions():
     """
     Get detailed sales transactions for a specific branch and date range
